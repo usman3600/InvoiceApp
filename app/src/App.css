@@ -1,0 +1,27 @@
+div.inputfeildcontainer{
+  display: flex;
+  flex-direction: column;
+}
+
+input{
+  padding: 8px;
+  margin-top: 8px;
+}
+label{
+  color: gray;
+}
+
+input::placeholder{
+  color:  black;
+}
+
+div.buttoncontainer{
+  width: 200;
+}
+button{
+  width:100%
+}
+
+option:hover{
+  color: cyan !important;
+}
