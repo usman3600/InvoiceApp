@@ -5,7 +5,7 @@ const sampleData = [
   {
     name: 'John Doe',
     date: '2023-01-15',
-    payment: 'Credit Card',
+    amount: '$13,000',
     status: 'paid',
     invoices: 'INV-001',
     profileImage: 'https://randomuser.me/api/portraits/men/1.jpg'
@@ -13,7 +13,7 @@ const sampleData = [
   {
     name: 'Jane Smith',
     date: '2023-02-20',
-    payment: 'PayPal',
+    amount: '$3,400',
     status: 'paid',
     invoices: 'INV-002',
     profileImage: 'https://randomuser.me/api/portraits/women/2.jpg'
@@ -21,7 +21,7 @@ const sampleData = [
   {
     name: 'Alice Johnson',
     date: '2023-03-10',
-    payment: 'Bank Transfer',
+    amount: '$6,000',
     status: 'not paid',
     invoices: 'INV-003',
     profileImage: 'https://randomuser.me/api/portraits/women/3.jpg'
@@ -33,7 +33,7 @@ const statusColors = {
   "not paid":"#f10909",
 }
 
-const UpcomingPaymentInfo = () => {
+const UpcomingamountInfo = () => {
   return (
     <Box>
       <TableContainer component={Paper} sx={{ height: "400px", padding: 2 }}>
@@ -44,9 +44,9 @@ const UpcomingPaymentInfo = () => {
         <Table>
           <TableHead>
             <TableRow >
-              <TableCell>Name</TableCell>
+              <TableCell >Name</TableCell>
               <TableCell>Date</TableCell>
-              <TableCell>Payment</TableCell>
+              <TableCell>amount</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Invoices</TableCell>
             </TableRow>
@@ -61,7 +61,7 @@ const UpcomingPaymentInfo = () => {
                   </Box>
                 </TableCell>
                 <TableCell sx={{paddingY: 1, paddingX: 2}}>{row.date}</TableCell>
-                <TableCell sx={{paddingY: 1, paddingX: 2}}>{row.payment}</TableCell>
+                <TableCell sx={{paddingY: 1, paddingX: 2}}>{row.amount}</TableCell>
                 <TableCell sx={{paddingY: 1, paddingX: 2, color:statusColors[row.status]}}>{row.status}</TableCell>
                 <TableCell sx={{paddingY: 1, paddingX: 2}}>{row.invoices}</TableCell>
               </TableRow>
@@ -75,4 +75,4 @@ const UpcomingPaymentInfo = () => {
   );
 };
 
-export default UpcomingPaymentInfo;
+export default UpcomingamountInfo;

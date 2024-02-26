@@ -44,7 +44,7 @@ const RecentActivity = ({activities, removeActivity}) => {
           </Avatar>
           <Box>
             <Typography sx={{fontSize:"15px"}}>{activity.message}</Typography>
-            <Typography sx={{fontSize:"12px", color:colors[activity.type]}} variant="body2" >{activity.timestamp}</Typography>
+            <Typography sx={{fontSize:"12px"}} variant="body2" >{activity.timestamp}</Typography>
           </Box>
           {/*<IconButton sx={{width:"fit-content"}} onClick={() => {removeActivity(activity.id, activities)}}>
               <CiCircleRemove/>

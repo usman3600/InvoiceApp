@@ -11,6 +11,9 @@ const RecentActivitySide = () => {
     {id:"2", type:"payment", message: 'payment made by john', timestamp: '20m ago' },
     {id:"3", type:"invoice", message: 'invoice sent to john', timestamp: '30m ago' },
     {id:"4", type:"client", message: 'added new client', timestamp: '10m ago' },
+    {id:"1", type:"client", message: 'added new client', timestamp: '10m ago' },
+    {id:"2", type:"payment", message: 'payment made by john', timestamp: '20m ago' },
+    {id:"3", type:"invoice", message: 'invoice sent to john', timestamp: '30m ago' },
   ]);
 
   const removeActivity = (removeid, activitys) =>{
