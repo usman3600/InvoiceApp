@@ -1,17 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState} from 'react'
+//import ReactDomServer from "react-dom/server"
+import Mailgun  from "mailgun-js";
+//import PdfShift from 'pdfshift';
 import {Box, List, ListItem, Typography, Container, Button, Divider, Input} from "@mui/material"
-import Header from '../components/Navbar'
+import { ServerStyleSheets } from "@mui/styles"
 import Styles from '../components/Styles'
 import FlexBox from '../components/FlexBox'
 import Client from '../components/Client'
 import DropDownSelect from "../components/DropDownSelect"
 
 
+/*
+const mailgunClient = new Mailgun({ apiKey: 'pubkey-35ac1560857122660ba59a64684716e8', domain: 'sandbox4f4823eb1cce458da5388bcbd6271945.mailgun.org' });
+const pdfShift = new PdfShift('sk_3f0266c9f25ef112908d6eac0e5447dc3792bb80');
+*/
+
 const InvoiceGenerator = () =>{
 
     const [items, setItems] = useState([
-        //{name:"milestone1", rate:"$30.00", hours:"3"},
-        //name:"milestone3", rate:"$350.00", hours:"26"},
+        {name:"milestone1", rate:"$30.00", hours:"3"},
+        {name:"milestone3", rate:"$350.00", hours:"26"},
       ])
       const [pageType, setpageType] = useState("generate invoice")
       const [total, setTotal] = useState(0.00)
@@ -147,7 +155,7 @@ const InvoiceGenerator = () =>{
      <Box>
       {isGenerateInvoice?
         <Button color="primary" variant="contained" onClick={()=>{changePage()}}>DONE</Button>:
-        <Button color="primary" variant="contained" onClick={()=>{changePage()}}>SEND</Button>
+        <Button color="primary" variant="contained" onClick={()=>{sendEmail()}}>SEND</Button>
       }
       </Box>
     </Container>
@@ -159,4 +167,55 @@ const InvoiceGenerator = () =>{
     </Box>
     )
   }
+/*
+const sheets = new ServerStyleSheets()
+const convertedToHTML = ReactDomServer.renderToString(
+        sheets.collect(
+          <InvoiceGenerator/>
+        )
+)
+
+const cssString = sheets.toString();
+const emailHtml = `<!DOCTYPE html>
+  <html>
+    <head>
+      <style>${cssString}</style>
+      <style type="text/css"> 
+        @media screen and (max-width: 630px) {}
+      </style>  
+    </head>
+    <body style="padding:0; margin:0">${convertedToHTML}</body>
+  </html>
+`;
+
+const pdfOptions = {
+  margin: "20px",
+  sandbox: true,
+};
+
+const sendEmail = async () => {
+  pdfShift.convert(emailHtml, pdfOptions)
+  .then((pdfBuffer) => {
+    // Prepare email data
+    const attachment = new mailgunClient.Attachment({
+      data: pdfBuffer,
+      filename: 'invoice.pdf',
+    });
+    const emailData = {
+      from: 'Mailgun Sandbox <postmaster@sandbox4f4823eb1cce458da5388bcbd6271945.mailgun.org>',
+      subject: 'Invoice',
+      html: emailHtml,
+      to: 'usmanfaki720@gmail.com',
+      attachment: attachment,
+    };
+
+    // Send email with PDF attachment
+    mailgunClient.messages().send(emailData);
+
+    // Optionally, post PDF data to server
+    // Example: axios.post('YOUR_SERVER_ENDPOINT', { pdf: pdfBuffer });
+  });
+
+}
+*/
 export default InvoiceGenerator

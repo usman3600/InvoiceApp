@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react'
+import {Button} from "@mui/material"
 import { Document, Page, Text, View, StyleSheet, PDFViewer } from '@react-pdf/renderer';
-import fs from 'fs';
 
 // Create styles
 const styles = StyleSheet.create({
@@ -46,9 +46,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const EmailPDF = ({ total, items }) => {
-  const generateAndSavePDF = () => {
-    const doc = (
+const Invoice = ({ total, items }) => {
+  return (
       <Document>
         <Page size="A4" style={styles.page}>
           <View style={styles.section}>
@@ -89,23 +88,48 @@ const EmailPDF = ({ total, items }) => {
         </Page>
       </Document>
     );
+};
 
-    const pdfFilePath = 'invoice.pdf'; // Define the path to save the PDF
+const GenerateEmailPDF = ({ total, items }) => {
+  const [pdfBlob, setPdfBlob] = useState(null);
 
-    PDFViewer.renderToStream(doc).toBlob((blob) => {
-      fs.writeFile(pdfFilePath, blob, (err) => {
-        if (err) {
-          console.error('Error saving PDF:', err);
-        } else {
-          console.log('PDF saved successfully:', pdfFilePath);
-        }
+  // Function to generate PDF blob
+  useEffect(() => {
+    const generatePdfBlob = async () => {
+      const blob = await <PDFViewer document={<Invoice total={total} items={items} />} />;
+      setPdfBlob(blob);
+    };
+
+    generatePdfBlob();
+  }, [total, items]);
+
+  // Function to post PDF blob to server
+  const postPdfToServer = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('invoice', pdfBlob, 'invoice.pdf');
+      const response = await fetch('your-server-url', {
+        method: 'POST',
+        body: formData
       });
-    });
+      if (response.ok) {
+        console.log('Invoice posted successfully');
+      } else {
+        console.error('Failed to post invoice to server');
+      }
+    } catch (error) {
+      console.error('Error posting invoice to server:', error);
+    }
   };
 
+  // Render
   return (
-    <button onClick={generateAndSavePDF}>Generate PDF</button>
+    <div>
+      {/* Render the PDF here using <PDFViewer> if needed */}
+      <PDFViewer document={<Invoice total={total} items={items} />}/>
+      {pdfBlob && <Button onClick={postPdfToServer}>Post to Server</Button>}
+    </div>
   );
 };
 
-export default EmailPDF;
+export default GenerateEmailPDF;
